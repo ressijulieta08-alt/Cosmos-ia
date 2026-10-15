@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#08051b">
+<title>COSMOS IA — Explorá el universo</title>
+<style>
+:root{--bg:#070519;--panel:#100b2b;--purple:#a855f7;--pink:#df75ff;--text:#f4edff;--muted:#b8acd6}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif}
+header{position:sticky;top:0;z-index:5;background:#09051bee;backdrop-filter:blur(15px);border-bottom:1px solid #39205d;padding:15px 5%;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.logo{font-size:23px;font-weight:900;letter-spacing:3px;color:white}
+.logo span{color:var(--pink)}
+nav{display:flex;gap:16px;flex-wrap:wrap}
+a{color:var(--muted);text-decoration:none}
+nav a:hover,a:hover{color:var(--pink)}
+button{cursor:pointer;border:1px solid var(--purple);border-radius:25px;padding:11px 17px;background:#8b35e9;color:white;font-size:14px}
+button:hover{filter:brightness(1.2)}
+.hero{min-height:420px;padding:65px 7%;display:flex;align-items:center;position:relative;overflow:hidden;background:radial-gradient(ellipse at 80% 45%,#6024a755,transparent 45%),radial-gradient(ellipse at 70% 80%,#351b6c55,transparent 50%)}
+.hero:after{content:"";position:absolute;right:8%;top:10%;width:230px;height:230px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#d6b6ff,#7c39d5 25%,#201050 65%,#050319);box-shadow:0 0 70px #8e39ff66}
+.hero:before{content:"";position:absolute;z-index:1;right:1%;top:29%;width:370px;height:110px;border:3px solid #b36cff;border-radius:50%;transform:rotate(-23deg);box-shadow:0 0 22px #a855f7}
+.hero-content{position:relative;z-index:2;max-width:610px}
+.kicker{color:var(--pink);letter-spacing:4px;font-size:12px}
+h1{font-size:clamp(43px,9vw,76px);line-height:1.05;margin:15px 0;background:linear-gradient(90deg,#fff,#d6a3ff,#9b4dff);color:transparent;background-clip:text}
+p{line-height:1.7;color:var(--muted)}
+.search{display:flex;gap:8px;margin-top:25px;max-width:520px}
+input{min-width:0;flex:1;background:#0c0821;border:1px solid #8143b8;border-radius:24px;padding:14px;color:white;font-size:15px;outline:none}
+input:focus{border-color:var(--pink)}
+section{padding:28px 5%}
+h2{font-size:22px}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.card{background:linear-gradient(145deg,#171037,#0c0920);border:1px solid #51258a;border-radius:17px;padding:20px;transition:.2s}
+.card:hover{transform:translateY(-4px);border-color:var(--pink)}
+.symbol{font-size:32px;color:var(--pink)}
+.card h3{margin:10px 0}
+.card p{font-size:14px}
+.result{display:none;margin-top:18px;padding:18px;border:1px solid var(--purple);border-radius:14px;background:#120b2c;white-space:pre-wrap}
+.ai{margin:12px 5%;padding:25px;border:1px solid #8444bd;border-radius:20px;background:radial-gradient(ellipse at top right,#54218a66,transparent 65%),#100b25}
+.ai input{width:100%;flex:auto}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.fact{border-left:3px solid var(--pink);padding:15px 18px;background:#110b28;border-radius:8px}
+footer{text-align:center;padding:35px 15px;color:var(--muted);border-top:1px solid #291644}
+@media(max-width:700px){header{padding:13px 4%;flex-wrap:wrap}.logo{font-size:19px}nav{gap:12px;font-size:13px}.hero{padding:55px 6%;min-height:420px}.hero:after{width:150px;height:150px;right:-25px;top:8%;opacity:.65}.hero:before{width:230px;right:-45px;top:22%}.hero-content{max-width:100%}.cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.card{padding:14px}.card p{font-size:13px}section{padding:22px 4%}.ai{margin:10px 4%;padding:18px}}
+@media(max-width:360px){nav{gap:8px}.cards{grid-template-columns:1fr}.hero{padding-top:45px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">✧ COSMOS <span>IA</span></div>
+  <nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#explorar">Explorar</a>
+    <a href="#inteligencia">COSMOS IA</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero" id="inicio">
+ <div class="hero-content">
+  <div class="kicker">UNIVERSO SIN LÍMITES</div>
+  <h1>COSMOS IA</h1>
+  <p>Explorá planetas, descubrí galaxias y conocé los misterios del universo. Tu próxima pregunta puede llevarte a otro mundo.</p>
+  <form class="search" id="busqueda">
+   <input id="consulta" placeholder="Buscá Marte, galaxias, agujeros negros..." aria-label="Buscar en el universo">
+   <button>Buscar</button>
+  </form>
+  <div id="resultado" class="result" aria-live="polite"></div>
+ </div>
+</section>
+
+<section id="explorar">
+ <h2>✦ Explorá el universo</h2>
+ <p>Elegí un mundo para comenzar tu viaje.</p>
+ <div class="cards">
+  <article class="card"><div class="symbol">🪐</div><h3>Planetas</h3><p>Conocé los mundos del sistema solar y sus características.</p><button onclick="mostrar('planetas')">Explorar</button></article>
+  <article class="card"><div class="symbol">☀</div><h3>Estrellas</h3><p>Descubrí cómo nacen, brillan y mueren las estrellas.</p><button onclick="mostrar('estrellas')">Explorar</button></article>
+  <article class="card"><div class="symbol">✧</div><h3>Galaxias</h3><p>Islas gigantes de estrellas, gas, polvo y materia oscura.</p><button onclick="mostrar('galaxias')">Explorar</button></article>
+  <article class="card"><div class="symbol">◉</div><h3>Agujeros negros</h3><p>Regiones del espacio donde la gravedad es extrema.</p><button onclick="mostrar('agujeros negros')">Explorar</button></article>
+ </div>
+ <div id="detalle" class="result" style="display:block">Elegí una categoría para descubrir información.</div>
+</section>
+
+<section id="inteligencia">
+ <div class="ai">
+  <div class="kicker">TU COMPAÑERA DE EXPLORACIÓN</div>
+  <h2>✧ Hablá con COSMOS IA</h2>
+  <p>Preguntá sobre el universo y explorá respuestas científicas de forma sencilla.</p>
+  <form id="preguntar">
+   <input id="pregunta" placeholder="¿Por qué brillan las estrellas?" aria-label="Pregunta sobre el universo">
+   <div class="actions"><button>Consultar</button><button type="button" onclick="document.getElementById('pregunta').value='¿Existe vida fuera de la Tierra?'">Pregunta sugerida</button></div>
+  </form>
+  <div id="respuesta" class="result" aria-live="polite"></div>
+  <p style="font-size:12px">Versión inicial: respuestas informativas integradas. La conexión con una IA generativa real se añadirá después.</p>
+ </div>
+</section>
+
+<section>
+ <h2>¿Sabías que...?</h2>
+ <div class="fact" id="dato">La luz del Sol tarda aproximadamente 8 minutos y 20 segundos en llegar a la Tierra.</div>
+ <div class="actions"><button onclick="nuevoDato()">Otro dato cósmico</button></div>
+</section>
+</main>
+
+<footer>✧ COSMOS IA · Mirá más allá<br><small>Explorá. Preguntá. Descubrí.</small></footer>
+
+<script>
+const datos={
+ "marte":"Marte es un planeta rocoso conocido como el planeta rojo por los óxidos de hierro de su superficie. Tiene dos pequeñas lunas: Fobos y Deimos.",
+ "tierra":"La Tierra es el único mundo conocido que alberga vida. Su agua líquida superficial y su atmósfera son fundamentales para los ecosistemas.",
+ "jupiter":"Júpiter es el planeta más grande del sistema solar. Su Gran Mancha Roja es una enorme tormenta que lleva siglos siendo observada.",
+ "saturno":"Saturno es un gigante gaseoso famoso por sus anillos, formados principalmente por partículas de hielo y roca.",
+ "estrellas":"Las estrellas son enormes esferas de plasma que producen energía mediante la fusión nuclear en sus núcleos.",
+ "sol":"El Sol es una estrella. Su gravedad mantiene a los planetas en órbita y su energía hace posible gran parte de la vida terrestre.",
+ "galaxias":"Las galaxias son enormes sistemas de estrellas, gas, polvo y materia oscura unidos por la gravedad. Vivimos en la Vía Láctea.",
+ "via lactea":"La Vía Láctea es la galaxia que contiene nuestro sistema solar. Es una galaxia espiral con cientos de miles de millones de estrellas.",
+ "agujeros negros":"Un agujero negro es una región del espacio con una gravedad tan intensa que, dentro del horizonte de sucesos, ni siquiera la luz puede escapar.",
+ "agujero negro":"Un agujero negro es una región del espacio con una gravedad tan intensa que, dentro del horizonte de sucesos, ni siquiera la luz puede escapar.",
+ "luna":"La Luna es el satélite natural de la Tierra. Su gravedad contribuye a las mareas y sus fases dependen de la posición relativa entre la Tierra y el Sol.",
+ "supernova":"Una supernova es una explosión estelar extremadamente energética. Algunas ocurren cuando ciertas estrellas masivas llegan al final de su evolución.",
+ "universo":"El universo incluye todo el espacio, el tiempo, la materia y la energía que conocemos. Su expansión comenzó hace unos 13.800 millones de años, según el modelo cosmológico actual.",
+ "vida extraterrestre":"Hasta ahora no existe evidencia científica confirmada de vida fuera de la Tierra. La búsqueda continúa mediante telescopios, sondas y estudios de otros mundos."
+};
+function buscar(texto){
+ const q=texto.toLowerCase().trim();
+ if(!q)return "Escribí algo para comenzar la exploración.";
+ for(const clave in datos)if(q.includes(clave))return datos[clave];
+ if(q.includes("planeta"))return "Los planetas orbitan estrellas. En nuestro sistema solar hay ocho planetas reconocidos, desde Mercurio hasta Neptuno.";
+ if(q.includes("estrella"))return datos.estrellas;
+ if(q.includes("galaxia"))return datos.galaxias;
+ if(q.includes("espacio"))return "El espacio contiene planetas, estrellas, galaxias, radiación y muchos fenómenos que la ciencia sigue investigando.";
+ return "Todavía no tengo una respuesta integrada para esa pregunta. Probá con Marte, Saturno, el Sol, las galaxias, las estrellas o los agujeros negros. La conexión con una IA real será una de las próximas mejoras.";
+}
+document.getElementById("busqueda").addEventListener("submit",e=>{
+ e.preventDefault();
+ const texto=document.getElementById("consulta").value;
+ const r=document.getElementById("resultado");
+ r.textContent=buscar(texto);r.style.display="block";
+});
+document.getElementById("preguntar").addEventListener("submit",e=>{
+ e.preventDefault();
+ const texto=document.getElementById("pregunta").value;
+ const r=document.getElementById("respuesta");
+ r.textContent=buscar(texto);r.style.display="block";
+});
+function mostrar(categoria){
+ const d={
+ "planetas":"Nuestro sistema solar tiene ocho planetas. Los cuatro interiores son rocosos; Júpiter y Saturno son gigantes gaseosos, mientras que Urano y Neptuno son gigantes helados.",
+ "estrellas":"Las estrellas nacen en nubes de gas y polvo. Durante gran parte de su vida producen energía fusionando hidrógeno en helio.",
+ "galaxias":"La Vía Láctea, Andrómeda y la galaxia del Triángulo forman parte del Grupo Local, un conjunto de galaxias unidas por la gravedad.",
+ "agujeros negros":"Los agujeros negros pueden formarse, por ejemplo, cuando el núcleo de una estrella masiva colapsa. También existen agujeros negros supermasivos en centros galácticos."
+ };
+ const el=document.getElementById("detalle");
+ el.textContent=d[categoria];el.style.display="block";
+ el.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+const curiosidades=[
+"Un día en Venus dura más que su año: tarda más en girar sobre sí mismo que en completar una órbita alrededor del Sol.",
+"La luz del Sol tarda aproximadamente 8 minutos y 20 segundos en llegar a la Tierra.",
+"En Marte se encuentra Olympus Mons, un volcán gigantesco de unos 22 kilómetros de altura.",
+"Andrómeda es una gran galaxia vecina de la Vía Láctea, situada a unos 2,5 millones de años luz.",
+"Las estrellas que vemos en el cielo están a distancias muy diferentes de nosotros."
+];
+let indice=0;
+function nuevoDato(){indice=(indice+1)%curiosidades.length;document.getElementById("dato").textContent=curiosidades[indice];}
+</script>
+</body>
+  </html>
+  
