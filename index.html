@@ -139,19 +139,59 @@ document.getElementById("busqueda").addEventListener("submit",e=>{
  const r=document.getElementById("resultado");
  r.textContent=buscar(texto);r.style.display="block";
 });
-document.getElementById("preguntar").addEventListener("submit",e=>{
- e.preventDefault();
- const texto=document.getElementById("pregunta").value;
- const r=document.getElementById("respuesta");
- r.textContent=buscar(texto);r.style.display="block";
+
+async function consultarIA(texto, resultado) {
+  const pregunta = texto.trim();
+
+  if (!pregunta) {
+    resultado.textContent = "Escribí una pregunta para comenzar.";
+    resultado.style.display = "block";
+    return;
+  }
+
+  resultado.textContent = "COSMOS IA está explorando el universo...";
+  resultado.style.display = "block";
+
+  try {
+    const respuesta = await fetch(
+      "https://cosmos-ia-api.ressijulieta08.workers.dev/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ question: pregunta })
+      }
+    );
+
+    const datos = await respuesta.json();
+
+    if (!respuesta.ok) {
+      throw new Error(datos.error || "No se pudo obtener una respuesta.");
+    }
+
+    resultado.textContent = datos.answer;
+  } catch (error) {
+    resultado.textContent =
+      "No pude conectar con COSMOS IA. Revisá la conexión e intentá de nuevo.";
+    console.error("Error de COSMOS IA:", error);
+  }
+}
+
+document.getElementById("busqueda").addEventListener("submit", async e => {
+  e.preventDefault();
+  const texto = document.getElementById("consulta").value;
+  const resultado = document.getElementById("resultado");
+  await consultarIA(texto, resultado);
 });
-function mostrar(categoria){
- const d={
- "planetas":"Nuestro sistema solar tiene ocho planetas. Los cuatro interiores son rocosos; Júpiter y Saturno son gigantes gaseosos, mientras que Urano y Neptuno son gigantes helados.",
- "estrellas":"Las estrellas nacen en nubes de gas y polvo. Durante gran parte de su vida producen energía fusionando hidrógeno en helio.",
- "galaxias":"La Vía Láctea, Andrómeda y la galaxia del Triángulo forman parte del Grupo Local, un conjunto de galaxias unidas por la gravedad.",
- "agujeros negros":"Los agujeros negros pueden formarse, por ejemplo, cuando el núcleo de una estrella masiva colapsa. También existen agujeros negros supermasivos en centros galácticos."
- };
+
+document.getElementById("preguntar").addEventListener("submit", async e => {
+  e.preventDefault();
+  const texto = document.getElementById("pregunta").value;
+  const resultado = document.getElementById("respuesta");
+  await consultarIA(texto, resultado);
+});
+  
  const el=document.getElementById("detalle");
  el.textContent=d[categoria];el.style.display="block";
  el.scrollIntoView({behavior:"smooth",block:"nearest"});
