@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -14,6 +14,8 @@ header{position:sticky;top:0;z-index:5;background:#09051bee;backdrop-filter:blur
 .logo{font-size:23px;font-weight:900;letter-spacing:3px;color:white}
 .logo span{color:var(--pink)}
 nav{display:flex;gap:16px;flex-wrap:wrap}
+.search-tools{display:flex;align-items:stretch;gap:8px;max-width:620px;width:100%;position:relative}.search-tools .search{flex:1;min-width:0}.search-tools .search input{width:100%}.menu-wrap{position:relative;flex-shrink:0}.menu-button{height:100%;min-width:52px;border-radius:16px;font-size:20px;padding:10px 15px}.explore-menu{display:none;position:absolute;right:0;top:calc(100% + 8px);z-index:20;width:245px;padding:10px;background:#130b2c;border:1px solid #8143b8;border-radius:16px;box-shadow:0 16px 45px #0009}.explore-menu.open{display:grid;gap:7px}.explore-menu button{width:100%;text-align:left;border-radius:10px;background:#21133d;border-color:#4e2c79}.explore-menu .menu-label{padding:7px 9px;color:var(--pink);font-size:11px;letter-spacing:2px}.cosmic-card{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:22px;padding:clamp(22px,4vw,38px);border:1px solid #9b55d7;border-radius:22px;min-height:220px;background:radial-gradient(ellipse at 85% 20%,#7437c866,transparent 42%),linear-gradient(120deg,#171037,#0b0820);overflow:hidden}.cosmic-card-copy{max-width:620px}.cosmic-card h3{font-size:clamp(25px,4vw,38px);margin:10px 0}.cosmic-art{font-size:clamp(70px,12vw,120px);filter:drop-shadow(0 0 24px #a855f7);padding:0 20px}.button-look{display:inline-block;margin-top:7px;padding:11px 17px;border:1px solid var(--purple);border-radius:25px;background:#8b35e9;color:white;font-size:14px}
+@media(max-width:700px){.search-tools{align-items:stretch}.menu-button{min-width:48px;padding:10px}.cosmic-card{align-items:flex-start}.cosmic-art{font-size:60px;padding:0}}@media(max-width:480px){.cosmic-art{display:none}.explore-menu{width:min(245px,85vw)}}
 a{color:var(--muted);text-decoration:none}
 nav a:hover,a:hover{color:var(--pink)}
 button{cursor:pointer;border:1px solid var(--purple);border-radius:25px;padding:11px 17px;background:#8b35e9;color:white;font-size:14px}
@@ -31,7 +33,7 @@ input{min-width:0;flex:1;background:#0c0821;border:1px solid #8143b8;border-radi
 input:focus{border-color:var(--pink)}
 section{padding:28px 5%}
 h2{font-size:22px}
-.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .card{background:linear-gradient(145deg,#171037,#0c0920);border:1px solid #51258a;border-radius:17px;padding:20px;transition:.2s}
 .card:hover{transform:translateY(-4px);border-color:var(--pink)}
 .symbol{font-size:32px;color:var(--pink)}
@@ -53,7 +55,7 @@ footer{text-align:center;padding:35px 15px;color:var(--muted);border-top:1px sol
   <nav>
     <a href="#inicio">Inicio</a>
     <a href="#explorar">Explorar</a>
-    <a href="#inteligencia">COSMOS IA</a>
+    <a href="#busqueda-principal" onclick="document.getElementById('consulta').focus()">COSMOS IA</a>
   </nav>
 </header>
 
@@ -63,10 +65,24 @@ footer{text-align:center;padding:35px 15px;color:var(--muted);border-top:1px sol
   <div class="kicker">UNIVERSO SIN LÍMITES</div>
   <h1>COSMOS IA</h1>
   <p>Explorá planetas, descubrí galaxias y conocé los misterios del universo. Tu próxima pregunta puede llevarte a otro mundo.</p>
-  <form class="search" id="busqueda">
-   <input id="consulta" type="text" placeholder="Buscá Marte, galaxias, agujeros negros..." aria-label="Buscar en el universo">
-   <button type="submit">Buscar</button>
-  </form>
+  <div class="search-tools" id="busqueda-principal">
+   <form class="search" id="busqueda">
+    <input id="consulta" type="text" placeholder="Buscá planetas, galaxias, agujeros negros..." aria-label="Buscar en el universo">
+    <button type="submit">Buscar</button>
+   </form>
+   <div class="menu-wrap">
+    <button class="menu-button" type="button" id="menuToggle" aria-label="Abrir menú de exploración" aria-expanded="false" onclick="alternarMenu()">☰</button>
+    <div class="explore-menu" id="exploreMenu" aria-label="Menú Explora el universo">
+     <div class="menu-label">EXPLORÁ EL UNIVERSO</div>
+     <button type="button" onclick="elegirCategoria('planetas')">🪐 Planetas</button>
+     <button type="button" onclick="elegirCategoria('estrellas')">☀ Estrellas</button>
+     <button type="button" onclick="elegirCategoria('galaxias')">✧ Galaxias</button>
+     <button type="button" onclick="elegirCategoria('agujeros negros')">◉ Agujeros negros</button>
+     <button type="button" onclick="location.href='datos-cosmicos.html'">✦ Todos los datos cósmicos</button>
+     <button type="button" onclick="preguntaSugerida()">✨ Preguntale a COSMOS IA</button>
+    </div>
+   </div>
+  </div>
   <div id="resultado" class="result" aria-live="polite"></div>
  </div>
 </section>
@@ -78,26 +94,12 @@ footer{text-align:center;padding:35px 15px;color:var(--muted);border-top:1px sol
   <article class="card"><div class="symbol">🪐</div><h3>Planetas</h3><p>Conocé los mundos del sistema solar y sus características.</p><button type="button" onclick="mostrar('planetas')">Explorar</button></article>
   <article class="card"><div class="symbol">☀</div><h3>Estrellas</h3><p>Descubrí cómo nacen, brillan y mueren las estrellas.</p><button type="button" onclick="mostrar('estrellas')">Explorar</button></article>
   <article class="card"><div class="symbol">✧</div><h3>Galaxias</h3><p>Islas gigantes de estrellas, gas, polvo y materia oscura.</p><button type="button" onclick="mostrar('galaxias')">Explorar</button></article>
-  <article class="card"><div class="symbol">◉</div><h3>Agujeros negros</h3><p>Regiones del espacio donde la gravedad es extrema.</p><button type="button" onclick="mostrar('agujeros negros')">Explorar</button></article>
  </div>
- <div id="detalle" class="result" style="display:block">Elegí una categoría para descubrir información.</div>
-</section>
-
-<section id="inteligencia">
- <div class="ai">
-  <div class="kicker">TU COMPAÑERA DE EXPLORACIÓN</div>
-  <h2>✧ Hablá con COSMOS IA</h2>
-  <p>Preguntá sobre el universo y explorá respuestas científicas de forma sencilla.</p>
-  <form id="preguntar">
-   <input id="pregunta" type="text" placeholder="¿Por qué brillan las estrellas?" aria-label="Pregunta sobre el universo">
-   <div class="actions">
-    <button type="submit">Consultar</button>
-    <button type="button" onclick="document.getElementById('pregunta').value='¿Existe vida fuera de la Tierra?'">Pregunta sugerida</button>
-   </div>
-  </form>
-  <div id="respuesta" class="result" aria-live="polite"></div>
-  <p style="font-size:12px">Preguntá, explorá y descubrí. Las respuestas dependen de la conexión con el servicio de inteligencia artificial.</p>
- </div>
+ <div id="detalle" class="result" style="display:none" aria-live="polite"></div>
+ <a class="cosmic-card" href="datos-cosmicos.html" aria-label="Abrir todos los datos cósmicos">
+  <div class="cosmic-card-copy"><div class="kicker">ARCHIVO DEL UNIVERSO</div><h3>Todos los datos cósmicos</h3><p>Explorá curiosidades, planetas, estrellas, galaxias, agujeros negros y otros misterios del cosmos en un solo lugar.</p><span class="button-look">Explorar datos cósmicos →</span></div>
+  <div class="cosmic-art" aria-hidden="true">✧</div>
+ </a>
 </section>
 
 <section>
@@ -135,6 +137,14 @@ function mostrar(categoria) {
   detalle.style.display = "block";
   detalle.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
+function alternarMenu() {
+ const menu=document.getElementById("exploreMenu"); const boton=document.getElementById("menuToggle");
+ const abierto=menu.classList.toggle("open"); boton.setAttribute("aria-expanded",String(abierto));
+}
+function cerrarMenu(){const menu=document.getElementById("exploreMenu");if(menu.classList.contains("open"))alternarMenu();}
+function elegirCategoria(categoria){document.getElementById("consulta").value=categoria;cerrarMenu();mostrar(categoria);}
+function preguntaSugerida(){document.getElementById("consulta").value="¿Existe vida fuera de la Tierra?";cerrarMenu();document.getElementById("consulta").focus();}
+
 
 function nuevoDato() {
   indice = (indice + 1) % curiosidades.length;
@@ -200,19 +210,11 @@ document.getElementById("busqueda").addEventListener("submit", function(event) {
   const resultado = document.getElementById("resultado");
   const boton = this.querySelector('button[type="submit"]');
 
-  consultarIA(campo.value, resultado, boton);
-});
-
-document.getElementById("preguntar").addEventListener("submit", function(event) {
-  event.preventDefault();
-
-  const campo = document.getElementById("pregunta");
-  const resultado = document.getElementById("respuesta");
-  const boton = this.querySelector('button[type="submit"]');
-
+  const consulta = campo.value.trim().toLowerCase();
+  if (categorias[consulta]) { resultado.style.display = "none"; mostrar(consulta); return; }
+  document.getElementById("detalle").style.display = "none";
   consultarIA(campo.value, resultado, boton);
 });
 </script>
 </body>
 </html>
-
