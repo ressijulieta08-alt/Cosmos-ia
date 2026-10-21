@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -43,6 +43,52 @@ nav{display:flex;gap:16px;flex-wrap:wrap}
   display:flex;
   align-items:center;
   justify-content:center;
+  
+/* CORRECCIÓN DEL MENÚ COSMOS IA */
+.search-tools {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px;
+  width: 100%;
+  max-width: 620px;
+}
+
+.search-tools .search {
+  display: flex;
+  flex: 1 1 0;
+  width: 0;
+  min-width: 0;
+  max-width: none;
+  margin-top: 0;
+  align-items: center;
+}
+
+.search-tools .menu-wrap {
+  position: relative;
+  flex: 0 0 48px;
+  width: 48px;
+  align-self: center;
+}
+
+.search-tools button.menu-button {
+  display: flex !important;
+  box-sizing: border-box !important;
+  width: 48px !important;
+  min-width: 48px !important;
+  max-width: 48px !important;
+  height: 48px !important;
+  min-height: 48px !important;
+  max-height: 48px !important;
+  flex: 0 0 48px !important;
+  align-self: center !important;
+  align-items: center;
+  justify-content: center;
+  padding: 0 !important;
+  margin: 0 !important;
+  line-height: 1;
+  border-radius: 14px;
+}
+  
 }
   
   display:flex;
