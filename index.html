@@ -1,425 +1,932 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#08051b">
-<title>COSMOS IA — Explorá el universo</title>
-<style>
-:root{--bg:#070519;--panel:#100b2b;--purple:#a855f7;--pink:#df75ff;--text:#f4edff;--muted:#b8acd6}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif}
-header{position:sticky;top:0;z-index:5;background:#09051bee;backdrop-filter:blur(15px);border-bottom:1px solid #39205d;padding:15px 5%;display:flex;justify-content:space-between;align-items:center;gap:12px}
-.logo{font-size:23px;font-weight:900;letter-spacing:3px;color:white}
-.logo span{color:var(--pink)}
-nav{display:flex;gap:16px;flex-wrap:wrap}
-{
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080519">
+  <meta name="description" content="Explorá el universo y descubrí sus misterios con COSMOS IA.">
+  <title>COSMOS IA — Explorá el universo</title>
 
-.search-tools {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  max-width: 620px;
-  position: relative;
-}
+  <style>
+    :root {
+      --bg: #080519;
+      --panel: #110b29;
+      --panel-light: #191035;
+      --purple: #a855f7;
+      --pink: #e879f9;
+      --white: #f8f3ff;
+      --muted: #c4b7dc;
+      --border: #38215c;
+    }
 
-.search-tools .search {
-  display: flex;
-  flex: 1 1 0;
-  width: 0;
-  min-width: 0;
-  max-width: none;
-  margin-top: 25px;
-  align-items: center;
-  gap: 8px;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-.search-tools .search input {
-  width: 100%;
-  min-width: 0;
-}
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+    }
 
-.search-tools .menu-wrap {
-  position: relative;
-  flex: 0 0 48px;
-  width: 48px;
-  align-self: center;
-}
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--white);
+      font-family: system-ui, -apple-system, sans-serif;
+      overflow-x: hidden;
+    }
 
-.search-tools .menu-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  width: 48px;
-  min-width: 48px;
-  height: 48px;
-  min-height: 48px;
-  flex: 0 0 48px;
-  margin: 25px 0 0;
-  padding: 0;
-  line-height: 1;
-  border-radius: 14px;
-}
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      background:
+        radial-gradient(circle at 10% 20%, #6825a51c, transparent 30%),
+        radial-gradient(circle at 90% 60%, #6b21a81c, transparent 35%);
+    }
 
-.explore-menu {
-  display: none;
-  position: absolute;
-  right: 0;
-  top: calc(100% + 8px);
-  z-index: 20;
-  width: 245px;
-  padding: 10px;
-  background: #130b2c;
-  border: 1px solid #8143b8;
-  border-radius: 16px;
-  box-shadow: 0 16px 45px #0009;
-}
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-.explore-menu.open {
-  display: grid;
-  gap: 7px;
-}
+    button,
+    input {
+      font: inherit;
+    }
 
-.explore-menu button {
-  width: 100%;
-  text-align: left;
-  border-radius: 10px;
-  background: #21133d;
-  border-color: #4e2c79;
-}
+    button {
+      cursor: pointer;
+    }
 
-.explore-menu .menu-label {
-  padding: 7px 9px;
-  color: var(--pink);
-  font-size: 11px;
-  letter-spacing: 2px;
-}
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible {
+      outline: 2px solid var(--pink);
+      outline-offset: 3px;
+    }
 
-.cosmic-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  margin-top: 22px;
-  padding: clamp(22px, 4vw, 38px);
-  border: 1px solid #9b55d7;
-  border-radius: 22px;
-  min-height: 220px;
-  background: radial-gradient(ellipse at 85% 20%, #7437c866, transparent 42%), linear-gradient(120deg, #171037, #0b0820);
-  overflow: hidden;
-}
+    .container {
+      width: min(1120px, 90%);
+      margin-inline: auto;
+    }
 
-.cosmic-card-copy {
-  max-width: 620px;
-}
+    /* ENCABEZADO */
 
-.cosmic-card h3 {
-  font-size: clamp(25px, 4vw, 38px);
-  margin: 10px 0;
-}
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: #080519ed;
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid #392052;
+    }
 
-.cosmic-art {
-  font-size: clamp(70px, 12vw, 120px);
-  filter: drop-shadow(0 0 24px #a855f7);
-  padding: 0 20px;
-}
+    .header-inner {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
 
-.button-look {
-  display: inline-block;
-  margin-top: 7px;
-  padding: 11px 17px;
-  border: 1px solid var(--purple);
-  border-radius: 25px;
-  background: #8b35e9;
-  color: white;
-  font-size: 14px;
-}
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      white-space: nowrap;
+    }
 
-@media (max-width: 700px) {
-  .search-tools {
-    align-items: center;
-  }
+    .logo-star {
+      color: var(--pink);
+      font-size: 30px;
+      text-shadow: 0 0 18px #c084fc99;
+    }
 
-  .search-tools .menu-button {
-    min-width: 48px;
-    padding: 0;
-  }
+    .logo span:last-child {
+      color: var(--pink);
+    }
 
-  .cosmic-card {
-    align-items: flex-start;
-  }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
 
-  .cosmic-art {
-    font-size: 60px;
-    padding: 0;
-  }
-}
+    nav a {
+      color: var(--muted);
+      font-size: 14px;
+      transition: color .2s;
+    }
 
-@media (max-width: 480px) {
-  .cosmic-art {
-    display: none;
-  }
+    nav a:hover {
+      color: var(--pink);
+    }
 
-  .explore-menu {
-    width: min(245px, 85vw);
-  }
-  
+    .nav-cta {
+      padding: 10px 16px;
+      border: 1px solid #8545bd;
+      border-radius: 30px;
+      background: #211139;
+    }
 
-.search-tools {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  max-width: 620px;
-  position: relative;
-}
+    /* PORTADA */
 
-.search-tools .search {
-  display: flex;
-  flex: 1 1 0;
-  width: 0;
-  min-width: 0;
-  max-width: none;
-  margin-top: 0;
-  align-items: center;
-}
+    .hero {
+      position: relative;
+      display: flex;
+      align-items: center;
+      min-height: 500px;
+      padding: 76px 0;
+      overflow: hidden;
+      border-bottom: 1px solid #241536;
+    }
 
-.search-tools .search input {
-  width: 100%;
-  min-width: 0;
-}
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 370px;
+      height: 370px;
+      right: -60px;
+      top: 55px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 32% 28%, #f1d5ff 0%, #c084fc 9%,
+        #7e22ce 30%, #35115f 58%, #100724 75%);
+      box-shadow: 0 0 100px #8b5cf64a;
+      opacity: .9;
+    }
 
-.search-tools .menu-wrap {
-  position: relative;
-  flex: 0 0 48px;
-  width: 48px;
-  align-self: center;
-}
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 490px;
+      height: 135px;
+      right: -115px;
+      top: 170px;
+      border: 3px solid #d8a6ff;
+      border-radius: 50%;
+      transform: rotate(-25deg);
+      box-shadow: 0 0 20px #a855f755;
+    }
 
-.search-tools .menu-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  width: 48px;
-  min-width: 48px;
-  max-width: 48px;
-  height: 48px;
-  min-height: 48px;
-  max-height: 48px;
-  flex: 0 0 48px;
-  margin: 0;
-  padding: 0;
-  line-height: 1;
-  border-radius: 14px;
-}
- 
-  
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 660px;
+    }
 
-  .search-tools .search input{width:100%}.menu-wrap{position:relative;flex-shrink:0}.menu-button{height:100%;min-width:52px;border-radius:16px;font-size:20px;padding:10px 15px}.explore-menu{display:none;position:absolute;right:0;top:calc(100% + 8px);z-index:20;width:245px;padding:10px;background:#130b2c;border:1px solid #8143b8;border-radius:16px;box-shadow:0 16px 45px #0009}.explore-menu.open{display:grid;gap:7px}.explore-menu button{width:100%;text-align:left;border-radius:10px;background:#21133d;border-color:#4e2c79}.explore-menu .menu-label{padding:7px 9px;color:var(--pink);font-size:11px;letter-spacing:2px}.cosmic-card{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:22px;padding:clamp(22px,4vw,38px);border:1px solid #9b55d7;border-radius:22px;min-height:220px;background:radial-gradient(ellipse at 85% 20%,#7437c866,transparent 42%),linear-gradient(120deg,#171037,#0b0820);overflow:hidden}.cosmic-card-copy{max-width:620px}.cosmic-card h3{font-size:clamp(25px,4vw,38px);margin:10px 0}.cosmic-art{font-size:clamp(70px,12vw,120px);filter:drop-shadow(0 0 24px #a855f7);padding:0 20px}.button-look{display:inline-block;margin-top:7px;padding:11px 17px;border:1px solid var(--purple);border-radius:25px;background:#8b35e9;color:white;font-size:14px}
-@media(max-width:700px){.search-tools{align-items:stretch}.menu-button{min-width:48px;padding:10px}.cosmic-card{align-items:flex-start}.cosmic-art{font-size:60px;padding:0}}@media(max-width:480px){.cosmic-art{display:none}.explore-menu{width:min(245px,85vw)}}
-a{color:var(--muted);text-decoration:none}
-nav a:hover,a:hover{color:var(--pink)}
-button{cursor:pointer;border:1px solid var(--purple);border-radius:25px;padding:11px 17px;background:#8b35e9;color:white;font-size:14px}
-button:hover{filter:brightness(1.2)}
-button:disabled{opacity:.6;cursor:wait}
-.hero{min-height:420px;padding:65px 7%;display:flex;align-items:center;position:relative;overflow:hidden;background:radial-gradient(ellipse at 80% 45%,#6024a755,transparent 45%),radial-gradient(ellipse at 70% 80%,#351b6c55,transparent 50%)}
-.hero:after{content:"";position:absolute;right:8%;top:10%;width:230px;height:230px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#d6b6ff,#7c39d5 25%,#201050 65%,#050319);box-shadow:0 0 70px #8e39ff66}
-.hero:before{content:"";position:absolute;z-index:1;right:1%;top:29%;width:370px;height:110px;border:3px solid #b36cff;border-radius:50%;transform:rotate(-23deg);box-shadow:0 0 22px #a855f7}
-.hero-content{position:relative;z-index:2;max-width:610px;width:100%}
-.kicker{color:var(--pink);letter-spacing:4px;font-size:12px}
-h1{font-size:clamp(43px,9vw,76px);line-height:1.05;margin:15px 0;background:linear-gradient(90deg,#fff,#d6a3ff,#9b4dff);color:transparent;background-clip:text}
-p{line-height:1.7;color:var(--muted)}
-.search{display:flex;gap:8px;margin-top:25px;max-width:520px}
-input{min-width:0;flex:1;background:#0c0821;border:1px solid #8143b8;border-radius:24px;padding:14px;color:white;font-size:15px;outline:none}
-input:focus{border-color:var(--pink)}
-section{padding:28px 5%}
-h2{font-size:22px}
-.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.card{background:linear-gradient(145deg,#171037,#0c0920);border:1px solid #51258a;border-radius:17px;padding:20px;transition:.2s}
-.card:hover{transform:translateY(-4px);border-color:var(--pink)}
-.symbol{font-size:32px;color:var(--pink)}
-.card h3{margin:10px 0}
-.card p{font-size:14px}
-.result{display:none;margin-top:18px;padding:18px;border:1px solid var(--purple);border-radius:14px;background:#120b2c;white-space:pre-wrap;line-height:1.7;overflow-wrap:anywhere;max-height:none;overflow:visible}
-.ai{margin:12px 5%;padding:25px;border:1px solid #8444bd;border-radius:20px;background:radial-gradient(ellipse at top right,#54218a66,transparent 65%),#100b25}
-.ai input{width:100%;flex:auto}
-.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
-.fact{border-left:3px solid var(--pink);padding:15px 18px;background:#110b28;border-radius:8px}
-footer{text-align:center;padding:35px 15px;color:var(--muted);border-top:1px solid #291644}
-@media(max-width:700px){header{padding:13px 4%;flex-wrap:wrap}.logo{font-size:19px}nav{gap:12px;font-size:13px}.hero{padding:55px 6%;min-height:420px}.hero:after{width:150px;height:150px;right:-25px;top:8%;opacity:.65}.hero:before{width:230px;right:-45px;top:22%}.hero-content{max-width:100%}.cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.card{padding:14px}.card p{font-size:13px}section{padding:22px 4%}.ai{margin:10px 4%;padding:18px}}
-@media(max-width:360px){nav{gap:8px}.cards{grid-template-columns:1fr}.hero{padding-top:45px}}
-</style>
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--pink);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 18px 0;
+      font-size: clamp(44px, 8vw, 76px);
+      line-height: 1.04;
+      letter-spacing: -2px;
+      background: linear-gradient(100deg, #fff 15%, #e9c5ff 55%, #b66cff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-description {
+      max-width: 530px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .primary-button,
+    .secondary-button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 46px;
+      padding: 12px 19px;
+      border-radius: 28px;
+      font-size: 14px;
+      font-weight: 700;
+      transition: transform .2s, background .2s;
+    }
+
+    .primary-button {
+      border: 1px solid #b56af5;
+      background: linear-gradient(110deg, #8b35df, #bd55ec);
+      color: white;
+      box-shadow: 0 0 25px #9333ea26;
+    }
+
+    .secondary-button {
+      border: 1px solid #604080;
+      background: #160d2a;
+      color: var(--white);
+    }
+
+    .primary-button:hover,
+    .secondary-button:hover {
+      transform: translateY(-2px);
+    }
+
+    /* BUSCADOR E IA */
+
+    .ai-section {
+      padding: 30px 0 20px;
+    }
+
+    .ai-panel {
+      padding: clamp(20px, 4vw, 34px);
+      border: 1px solid #60368b;
+      border-radius: 22px;
+      background:
+        radial-gradient(ellipse at top right, #7529a52b, transparent 55%),
+        var(--panel);
+      box-shadow: 0 15px 50px #00000020;
+    }
+
+    .section-label {
+      color: var(--pink);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .ai-panel h2 {
+      margin: 10px 0;
+      font-size: clamp(23px, 4vw, 32px);
+    }
+
+    .ai-panel > p {
+      margin: 0 0 22px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .search-form {
+      display: flex;
+      align-items: stretch;
+      gap: 10px;
+    }
+
+    .search-form input,
+    .ai-question input {
+      width: 100%;
+      min-width: 0;
+      min-height: 48px;
+      padding: 13px 16px;
+      border: 1px solid #543776;
+      border-radius: 13px;
+      background: #09051a;
+      color: white;
+      font-size: 14px;
+    }
+
+    input::placeholder {
+      color: #9586ac;
+    }
+
+    .search-form input {
+      flex: 1;
+    }
+
+    .search-form button,
+    .ai-question button {
+      flex-shrink: 0;
+      padding: 12px 20px;
+      border: 1px solid #a855f7;
+      border-radius: 13px;
+      background: #8135cb;
+      color: white;
+      font-weight: 700;
+    }
+
+    .search-form button:hover,
+    .ai-question button:hover {
+      background: #9849e5;
+    }
+
+    .result {
+      display: none;
+      margin-top: 20px;
+      padding: 19px;
+      border: 1px solid #71449a;
+      border-radius: 14px;
+      background: #0b071c;
+      color: #e8ddf8;
+      font-size: 14px;
+      line-height: 1.85;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .result.visible {
+      display: block;
+    }
+
+    /* EXPLORACIÓN */
+
+    .explore-section {
+      padding: 55px 0;
+    }
+
+    .section-heading {
+      margin-bottom: 25px;
+    }
+
+    .section-heading h2 {
+      margin: 9px 0;
+      font-size: clamp(25px, 4vw, 34px);
+    }
+
+    .section-heading p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 17px;
+    }
+
+    .card {
+      position: relative;
+      padding: 24px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 19px;
+      background: linear-gradient(145deg, #191031, #0c081d 85%);
+      transition: transform .25s, border-color .25s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: #a855f7;
+    }
+
+    .card-icon {
+      display: grid;
+      place-items: center;
+      width: 55px;
+      height: 55px;
+      border: 1px solid #7745a1;
+      border-radius: 16px;
+      background: #291441;
+      font-size: 29px;
+      box-shadow: 0 0 25px #9333ea17;
+    }
+
+    .card h3 {
+      margin: 19px 0 9px;
+      font-size: 20px;
+    }
+
+    .card p {
+      min-height: 70px;
+      margin: 0 0 19px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .text-button {
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: #d6a5ff;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .text-button:hover {
+      color: white;
+    }
+
+    /* TODOS LOS DATOS CÓSMICOS */
+
+    .cosmic-card {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 230px;
+      margin-top: 23px;
+      padding: clamp(23px, 5vw, 42px);
+      overflow: hidden;
+      border: 1px solid #8546b8;
+      border-radius: 23px;
+      background:
+        radial-gradient(ellipse at 85% 30%, #873bd34a, transparent 42%),
+        linear-gradient(115deg, #1a1037, #0d0821);
+      transition: border-color .2s, transform .2s;
+    }
+
+    .cosmic-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--pink);
+    }
+
+    .cosmic-copy {
+      position: relative;
+      z-index: 1;
+      max-width: 620px;
+    }
+
+    .cosmic-card h3 {
+      margin: 12px 0;
+      font-size: clamp(24px, 4vw, 36px);
+    }
+
+    .cosmic-card p {
+      max-width: 570px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .cosmic-art {
+      padding: 0 12px;
+      color: #d8a7ff;
+      font-size: clamp(65px, 12vw, 115px);
+      text-shadow: 0 0 35px #a855f7a8;
+    }
+
+    /* DATO CÓSMICO */
+
+    .fact-section {
+      padding: 15px 0 65px;
+    }
+
+    .fact-box {
+      padding: 23px;
+      border-left: 3px solid var(--pink);
+      border-radius: 0 14px 14px 0;
+      background: #130c29;
+      color: #e8ddf8;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .fact-button {
+      margin-top: 15px;
+      padding: 10px 15px;
+      border: 1px solid #634080;
+      border-radius: 25px;
+      background: #1b1032;
+      color: #ead8ff;
+      font-size: 13px;
+    }
+
+    /* PIE DE PÁGINA */
+
+    footer {
+      padding: 30px 15px;
+      border-top: 1px solid #29183e;
+      color: var(--muted);
+      text-align: center;
+      font-size: 12px;
+      line-height: 2;
+    }
+
+    footer strong {
+      color: var(--pink);
+      letter-spacing: 2px;
+    }
+
+    /* CELULARES Y TABLETS */
+
+    @media (max-width: 760px) {
+      .container {
+        width: 90%;
+      }
+
+      .header-inner {
+        min-height: 70px;
+        gap: 10px;
+      }
+
+      .logo {
+        gap: 6px;
+        font-size: 17px;
+        letter-spacing: 1.8px;
+      }
+
+      .logo-star {
+        font-size: 23px;
+      }
+
+      nav {
+        gap: 13px;
+      }
+
+      nav a {
+        font-size: 12px;
+      }
+
+      .nav-cta {
+        padding: 8px 10px;
+      }
+
+      .hero {
+        min-height: 460px;
+        padding: 65px 0;
+      }
+
+      .hero::before {
+        width: 240px;
+        height: 240px;
+        right: -115px;
+        top: 70px;
+        opacity: .55;
+      }
+
+      .hero::after {
+        width: 300px;
+        height: 90px;
+        right: -145px;
+        top: 140px;
+        opacity: .6;
+      }
+
+      .hero-content {
+        max-width: 100%;
+      }
+
+      .hero-description {
+        max-width: 460px;
+      }
+
+      .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .card {
+        padding: 18px;
+      }
+
+      .card p {
+        min-height: 90px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        width: 91%;
+      }
+
+      .header-inner {
+        flex-wrap: wrap;
+        padding: 13px 0;
+      }
+
+      nav {
+        gap: 12px;
+      }
+
+      .logo {
+        font-size: 18px;
+      }
+
+      nav a {
+        font-size: 12px;
+      }
+
+      .hero {
+        min-height: 420px;
+        padding: 52px 0;
+      }
+
+      h1 {
+        font-size: 48px;
+        letter-spacing: -1.5px;
+      }
+
+      .hero-description {
+        font-size: 14px;
+      }
+
+      .hero-actions {
+        gap: 9px;
+      }
+
+      .primary-button,
+      .secondary-button {
+        min-height: 44px;
+        padding: 11px 14px;
+        font-size: 12px;
+      }
+
+      .search-form {
+        flex-direction: column;
+      }
+
+      .search-form button {
+        width: 100%;
+        min-height: 46px;
+      }
+
+      .ai-section {
+        padding-top: 22px;
+      }
+
+      .ai-panel {
+        padding: 20px 16px;
+        border-radius: 17px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        padding: 21px;
+      }
+
+      .card p {
+        min-height: 0;
+      }
+
+      .card-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 25px;
+      }
+
+      .cosmic-card {
+        min-height: 0;
+        padding: 25px 20px;
+      }
+
+      .cosmic-art {
+        display: none;
+      }
+
+      .cosmic-card h3 {
+        font-size: 25px;
+      }
+
+      .cosmic-card p {
+        font-size: 13px;
+      }
+
+      .explore-section {
+        padding: 40px 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<header>
-  <div class="logo">✧ COSMOS <span>IA</span></div>
-  <nav>
-    <a href="#inicio">Inicio</a>
-    <a href="#explorar">Explorar</a>
-    <a href="#busqueda-principal" onclick="document.getElementById('consulta').focus()">COSMOS IA</a>
-  </nav>
-</header>
 
-<main>
-<section class="hero" id="inicio">
- <div class="hero-content">
-  <div class="kicker">UNIVERSO SIN LÍMITES</div>
-  <h1>COSMOS IA</h1>
-  <p>Explorá planetas, descubrí galaxias y conocé los misterios del universo. Tu próxima pregunta puede llevarte a otro mundo.</p>
-  <div class="search-tools" id="busqueda-principal">
-   <form class="search" id="busqueda">
-    <input id="consulta" type="text" placeholder="Buscá planetas, galaxias, agujeros negros..." aria-label="Buscar en el universo">
-    <button type="submit">Buscar</button>
-   </form>
-   <div class="menu-wrap">
-    <button class="menu-button" type="button" id="menuToggle" aria-label="Abrir menú de exploración" aria-expanded="false" onclick="alternarMenu()">☰</button>
-    <div class="explore-menu" id="exploreMenu" aria-label="Menú Explora el universo">
-     <div class="menu-label">EXPLORÁ EL UNIVERSO</div>
-     <button type="button" onclick="elegirCategoria('planetas')">🪐 Planetas</button>
-     <button type="button" onclick="elegirCategoria('estrellas')">☀ Estrellas</button>
-     <button type="button" onclick="elegirCategoria('galaxias')">✧ Galaxias</button>
-     <button type="button" onclick="elegirCategoria('agujeros negros')">◉ Agujeros negros</button>
-     <button type="button" onclick="location.href='datos-cosmicos.html'">✦ Todos los datos cósmicos</button>
-     <button type="button" onclick="preguntaSugerida()">✨ Preguntale a COSMOS IA</button>
+  <header>
+    <div class="container header-inner">
+      <a class="logo" href="#inicio" aria-label="COSMOS IA, inicio">
+        <span class="logo-star">✧</span>
+        <span>COSMOS <span>IA</span></span>
+      </a>
+
+      <nav aria-label="Navegación principal">
+        <a href="#inicio">Inicio</a>
+        <a href="#explorar">Explorar</a>
+        <a class="nav-cta" href="#cosmos-ia">COSMOS IA</a>
+      </nav>
     </div>
-   </div>
-  </div>
-  <div id="resultado" class="result" aria-live="polite"></div>
- </div>
-</section>
+  </header>
 
-<section id="explorar">
- <h2>✦ Explorá el universo</h2>
- <p>Elegí un mundo para comenzar tu viaje.</p>
- <div class="cards">
-  <article class="card"><div class="symbol">🪐</div><h3>Planetas</h3><p>Conocé los mundos del sistema solar y sus características.</p><button type="button" onclick="mostrar('planetas')">Explorar</button></article>
-  <article class="card"><div class="symbol">☀</div><h3>Estrellas</h3><p>Descubrí cómo nacen, brillan y mueren las estrellas.</p><button type="button" onclick="mostrar('estrellas')">Explorar</button></article>
-  <article class="card"><div class="symbol">✧</div><h3>Galaxias</h3><p>Islas gigantes de estrellas, gas, polvo y materia oscura.</p><button type="button" onclick="mostrar('galaxias')">Explorar</button></article>
- </div>
- <div id="detalle" class="result" style="display:none" aria-live="polite"></div>
- <a class="cosmic-card" href="datos-cosmicos.html" aria-label="Abrir todos los datos cósmicos">
-  <div class="cosmic-card-copy"><div class="kicker">ARCHIVO DEL UNIVERSO</div><h3>Todos los datos cósmicos</h3><p>Explorá curiosidades, planetas, estrellas, galaxias, agujeros negros y otros misterios del cosmos en un solo lugar.</p><span class="button-look">Explorar datos cósmicos →</span></div>
-  <div class="cosmic-art" aria-hidden="true">✧</div>
- </a>
-</section>
+  <main>
+    <!-- PORTADA -->
+    <section class="hero" id="inicio">
+      <div class="container">
+        <div class="hero-content">
+          <div class="eyebrow">✦ Universo sin límites</div>
 
-<section>
- <h2>¿Sabías que...?</h2>
- <div class="fact" id="dato">La luz del Sol tarda aproximadamente 8 minutos y 20 segundos en llegar a la Tierra.</div>
- <div class="actions"><button type="button" onclick="nuevoDato()">Otro dato cósmico</button></div>
-</section>
-</main>
+          <h1>Explorá el<br>universo.</h1>
 
-<footer>✧ COSMOS IA · Mirá más allá<br><small>Explorá. Preguntá. Descubrí.</small></footer>
+          <p class="hero-description">
+            Descubrí planetas, explorá galaxias y conocé los misterios
+            del cosmos. Tu próxima pregunta puede llevarte a otro mundo.
+          </p>
 
-<script>
-const URL_COSMOS = "https://cosmos-ia-api.ressijulieta08.workers.dev/";
+          <div class="hero-actions">
+            <a class="primary-button" href="#explorar">
+              Comenzar exploración →
+            </a>
+            <a class="secondary-button" href="#cosmos-ia">
+              ✧ Hablar con la IA
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-const categorias = {
-  "planetas": "Nuestro sistema solar tiene ocho planetas. Mercurio, Venus, la Tierra y Marte son rocosos. Júpiter y Saturno son gigantes gaseosos, mientras que Urano y Neptuno son gigantes helados.",
-  "estrellas": "Las estrellas son enormes esferas de plasma. Durante gran parte de su vida producen energía mediante la fusión nuclear en sus núcleos. Nacen en nubes de gas y polvo y evolucionan durante millones o miles de millones de años.",
-  "galaxias": "Las galaxias son enormes sistemas de estrellas, gas, polvo y materia oscura unidos por la gravedad. Nuestro sistema solar se encuentra en la Vía Láctea. Andrómeda es una de nuestras grandes galaxias vecinas.",
-  "agujeros negros": "Un agujero negro es una región del espacio con una gravedad tan intensa que, dentro de su horizonte de sucesos, ni siquiera la luz puede escapar. Los astrónomos estudian sus efectos sobre la materia y la luz que los rodean."
-};
+    <!-- COSMOS IA -->
+    <section class="ai-section container" id="cosmos-ia">
+      <div class="ai-panel">
+        <div class="section-label">✦ Tu asistente espacial</div>
 
-const curiosidades = [
-  "Un día en Venus dura más que su año: tarda más en girar sobre sí mismo que en completar una órbita alrededor del Sol.",
-  "La luz del Sol tarda aproximadamente 8 minutos y 20 segundos en llegar a la Tierra.",
-  "En Marte se encuentra Olympus Mons, un volcán gigantesco de unos 22 kilómetros de altura.",
-  "Andrómeda es una gran galaxia vecina de la Vía Láctea, situada a unos 2,5 millones de años luz.",
-  "Las estrellas que vemos en el cielo están a distancias muy diferentes de nosotros."
-];
+        <h2>Preguntale al universo</h2>
 
-let indice = 0;
+        <p>
+          ¿Tenés curiosidad por algo del espacio? Escribí tu pregunta
+          y COSMOS IA te ayudará a descubrirlo.
+        </p>
 
-function mostrar(categoria) {
-  const detalle = document.getElementById("detalle");
-  detalle.textContent = categorias[categoria] || "No encontré información sobre esa categoría.";
-  detalle.style.display = "block";
-  detalle.scrollIntoView({ behavior: "smooth", block: "nearest" });
-}
-function alternarMenu() {
- const menu=document.getElementById("exploreMenu"); const boton=document.getElementById("menuToggle");
- const abierto=menu.classList.toggle("open"); boton.setAttribute("aria-expanded",String(abierto));
-}
-function cerrarMenu(){const menu=document.getElementById("exploreMenu");if(menu.classList.contains("open"))alternarMenu();}
-function elegirCategoria(categoria){document.getElementById("consulta").value=categoria;cerrarMenu();mostrar(categoria);}
-function preguntaSugerida(){document.getElementById("consulta").value="¿Existe vida fuera de la Tierra?";cerrarMenu();document.getElementById("consulta").focus();}
+        <form class="search-form" id="busqueda">
+          <input
+            id="consulta"
+            type="text"
+            placeholder="Ej.: ¿Cómo se forman los agujeros negros?"
+            aria-label="Escribí tu pregunta"
+            autocomplete="off"
+            required
+          >
+          <button type="submit" id="botonBuscar">Consultar ✦</button>
+        </form>
 
+        <div
+          class="result"
+          id="resultado"
+          role="status"
+          aria-live="polite"
+        ></div>
+      </div>
+    </section>
 
-function nuevoDato() {
-  indice = (indice + 1) % curiosidades.length;
-  document.getElementById("dato").textContent = curiosidades[indice];
-}
+    <!-- CATEGORÍAS -->
+    <section class="explore-section container" id="explorar">
+      <div class="section-heading">
+        <div class="section-label">Elegí tu destino</div>
+        <h2>Explorá el universo ✧</h2>
+        <p>Un universo de descubrimientos está esperando por vos.</p>
+      </div>
 
-async function consultarIA(texto, resultado, boton) {
-  const pregunta = texto.trim();
+      <div class="cards">
+        <article class="card">
+          <div class="card-icon">🪐</div>
+          <h3>Planetas</h3>
+          <p>
+            Conocé los mundos del sistema solar, sus atmósferas,
+            lunas y características.
+          </p>
+          <button class="text-button" onclick="mostrar('planetas')">
+            Explorar planetas →
+          </button>
+        </article>
 
-  if (!pregunta) {
-    resultado.textContent = "Escribí una pregunta para comenzar la exploración.";
-    resultado.style.display = "block";
-    return;
-  }
+        <article class="card">
+          <div class="card-icon">☀</div>
+          <h3>Estrellas</h3>
+          <p>
+            Descubrí cómo nacen, brillan y evolucionan las estrellas
+            a lo largo de millones de años.
+          </p>
+          <button class="text-button" onclick="mostrar('estrellas')">
+            Explorar estrellas →
+          </button>
+        </article>
 
-  resultado.textContent = "COSMOS IA está explorando el universo...";
-  resultado.style.display = "block";
+        <article class="card">
+          <div class="card-icon">🌌</div>
+          <h3>Galaxias</h3>
+          <p>
+            Viajá entre enormes conjuntos de estrellas y conocé
+            nuestra galaxia, la Vía Láctea.
+          </p>
+          <button class="text-button" onclick="mostrar('galaxias')">
+            Explorar galaxias →
+          </button>
+        </article>
 
-  if (boton) boton.disabled = true;
+        <article class="card">
+          <div class="card-icon">◉</div>
+          <h3>Agujeros negros</h3>
+          <p>
+            Investigá estos objetos extremos y descubrí qué sucede
+            cerca de su horizonte de sucesos.
+          </p>
+          <button class="text-button" onclick="mostrar('agujeros negros')">
+            Descubrir más →
+          </button>
+        </article>
 
-  try {
-    const respuesta = await fetch(URL_COSMOS, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ question: pregunta })
-    });
+        <article class="card">
+          <div class="card-icon">☄</div>
+          <h3>Cometas y asteroides</h3>
+          <p>
+            Explorá los cuerpos pequeños que viajan por nuestro
+            sistema solar y sus diferencias.
+          </p>
+          <button class="text-button" onclick="mostrar('cometas y asteroides')">
+            Explorar cuerpos →
+          </button>
+        </article>
 
-    let datos;
-    try {
-      datos = await respuesta.json();
-    } catch {
-      throw new Error("El servidor devolvió una respuesta que no se pudo leer.");
-    }
+        <article class="card">
+          <div class="card-icon">🛰</div>
+          <h3>Exploración espacial</h3>
+          <p>
+            Conocé sondas, telescopios y misiones que nos ayudan
+            a estudiar el universo.
+          </p>
+          <button class="text-button" onclick="mostrar('exploración espacial')">
+            Explorar misiones →
+          </button>
+        </article>
+      </div>
 
-    if (!respuesta.ok) {
-      throw new Error(datos.error || "El servidor respondió con un error (" + respuesta.status + ").");
-    }
+      <div class="result" id="detalle" aria-live="polite"></div>
 
-    if (typeof datos.answer !== "string" || !datos.answer.trim()) {
-      throw new Error("El servidor no devolvió una respuesta.");
-    }
+      <!-- ENLACE A LA PÁGINA DE DATOS -->
+      <a class="cosmic-card" href="datos-cosmicos.html">
+        <div class="cosmic-copy">
+          <div class="eyebrow">✦ Archivo del universo</div>
+          <h3>Todos los datos cósmicos</h3>
+          <p>
+            Curiosidades, información astronómica y misterios del
+            universo reunidos en un solo lugar. Tu próxima aventura
+            comienza acá.
+          </p>
+          <span class="primary-button">
+            Explorar el archivo →
+          </span>
+        </div>
 
-    resultado.textContent = datos.answer;
-  } catch (error) {
-    console.error("Error de COSMOS IA:", error);
+        <div class="cosmic-art" aria-hidden="true">✧</div>
+      </a>
+    </section>
 
-    if (error instanceof TypeError) {
-      resultado.textContent = "No pude conectar con el servidor de COSMOS IA. Puede haber un problema de conexión o configuración. Intentá de nuevo más tarde.";
-    } else {
-      resultado.textContent = "COSMOS IA no pudo completar la consulta. " + error.message;
-    }
-  } finally {
-    if (boton) boton.disabled = false;
-  }
-}
+    <!-- CURIOSIDADES -->
+    <section class="fact-section container">
+      <div class="section-heading">
+        <div class="section-label">Un dato para viajar</div>
+        <h2>¿Sabías que...?</h2>
+      </div>
 
-document.getElementById("busqueda").addEventListener("submit", function(event) {
-  event.preventDefault();
+      <div class="fact-box" id="dato">
+        La luz del Sol tarda aproximadamente 8 minutos y 20 segundos
+        en llegar a la Tierra.
+      </div>
 
-  const campo = document.getElementById("consulta");
-  const resultado = document.getElementById("resultado");
-  const boton = this.querySelector('button[type="submit"]');
+      <button class="fact-button" onclick="nuevoDato()">
+        ✦ Descubrir otro dato
+      </button>
+    </section>
+  </main>
 
-  const consulta = campo.value.trim().toLowerCase();
-  if (categorias[consulta]) { resultado.style.display = "none"; mostrar(consulta); return; }
-  document.getElementById("detalle").style.display = "none";
-  consultarIA(campo.value, resultado, boton);
-});
-</script>
-</body>
-</html>
+  <footer>
+    <strong>✧ COSMOS IA</strong>
+    <div>Explorá. Preguntá. Descubrí.</div>
+    <div>El universo es más grande de lo que imaginás.</div>
+  </footer>
+
+  <script>
+    // Conexión con la IA existente
+    const URL_COSMOS =
+      "https://cosmos-ia-api.ressijulieta08.workers.dev/";
+
+    const categorias = {
+      "planetas":
+        "Nuestro sistema solar tiene ocho planetas. Mercurio, Venus, la Tierra y Marte son rocosos. Júpiter y Saturno son gigantes gaseosos, mientras que Urano y Neptuno son gigantes helados.",
+
+      "estrellas":
+        "Las estrellas son enormes esferas de plasma. Producen energía mediante la fusión nuclear en sus núcleos. Nacen en nubes de gas y polvo y evolucionan durante millon
